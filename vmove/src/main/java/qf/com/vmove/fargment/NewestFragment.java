@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class NewestFragment extends Fragment {
         LayoutInflater inflater1=LayoutInflater.from(getActivity());
         View view=inflater.inflate(R.layout.fragment_newest,container,false);
         lv= (ListView) view.findViewById(R.id.nf_lv);
-        adapter = new NfAdapter(new ArrayList<>(), getActivity());
+        adapter = new NfAdapter(new ArrayList<>(), getActivity(),2);
         lv.setAdapter(adapter);
         indata(string);
         swipe = (SwipeRefreshLayout) view;
@@ -66,40 +67,35 @@ public class NewestFragment extends Fragment {
 
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
 
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
                 View v = view.getChildAt(0);
-                if (v != null) {
-                  String date2 = (String) v.getContentDescription();
-                    if (!date2.equals(data)) {
-//                        try {
-
-                            mListener.onFragmentInteraction(date2.equals(format.format(new Date())) ? "最新" : "不是今天",true);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-                       data=date2 ;
+                if (v !=null){
+                    String time = (String) v.getContentDescription();
+                    if (!time.equals(data)){
+                        try {
+                            mListener.onFragmentInteraction(time.equals(format.format(new Date())) ?"最新" : time
+                                    ,format.parse(time).compareTo(format.parse(data))<0);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        data=time;
                     }
-                }
-                if (!isLoading && firstVisibleItem + visibleItemCount > totalItemCount - 2) {
-                    page++;
-                    String string3=string2+page;
-                    indata(string3);
-                    isLoading = true;
 
+                }
+                if (isLoading && firstVisibleItem+visibleItemCount>totalItemCount-2) {
+                    page++;
+                    String phat=string2+page;
+                    indata(phat);
                 }
             }
         });
-
-
-
 
         return view;
     }
@@ -128,10 +124,10 @@ public class NewestFragment extends Fragment {
                         list.add(bean);
                     }
                     adapter.addAll(list);
+                    isLoading = false;
                 }
                     @Override
                     public void onError(Exception e) {
-
                     }
                 }).execute(string);
 

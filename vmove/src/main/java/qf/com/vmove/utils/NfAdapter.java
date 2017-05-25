@@ -12,7 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wujie on 2017/5/23.
@@ -21,11 +23,20 @@ import java.util.List;
 public class NfAdapter<D> extends BaseAdapter{
     private List<D> list;
     private Context context;
+    private int typeCount;
+    private Map<Integer, Integer> map;
 
 
     public NfAdapter(List<D> list, Context context) {
+     this(list,context,1);
+    }
+
+    public NfAdapter(List<D> list, Context context, int typeCount) {
         this.list = list;
         this.context = context;
+        this.typeCount = typeCount;
+        map = new HashMap<>();
+
     }
 
     @Override
@@ -107,6 +118,26 @@ public class NfAdapter<D> extends BaseAdapter{
 
         return convertView;
     }
+//多布局需要添加的两个方法
+    @Override
+    public int getViewTypeCount() {
+        return typeCount;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        AdapterData data = list.get(position).getClass().getAnnotation(AdapterData.class);
+        if (data != null) {
+            int layoutId =data.layoutId();
+            if (!map.containsKey(layoutId)){
+                map.put(layoutId, map.size());
+            }
+            return map.get(layoutId);
+        }
+
+        return super.getItemViewType(position);
+    }
+
     public void addAll(Collection<? extends D> collection) {
         list.addAll(collection);
         notifyDataSetChanged();

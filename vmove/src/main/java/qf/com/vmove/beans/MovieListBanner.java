@@ -37,7 +37,6 @@ public class MovieListBanner {
     public void setData(List<MoviewBannerBean> data) {
         this.data = data;
     }
-
     public static class MoviewBannerBean {
 
         private String bannerid;

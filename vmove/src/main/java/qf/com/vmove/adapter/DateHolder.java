@@ -11,7 +11,7 @@ import qf.com.vmove.utils.NfAdapter;
  */
 
 public class DateHolder {
-    @BindingView(id = R.id.date_text, fieldName = "data", binder = ItemBinder.class)
+    @BindingView(id = R.id.date_text, fieldName = "date", binder = ItemBinder.class)
     public TextView text;
     public static class ItemBinder implements NfAdapter.ViewBinder<TextView, String>{
 
