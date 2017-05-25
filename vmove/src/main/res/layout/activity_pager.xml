@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/pager_vp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+    <RadioGroup
+        android:id="@+id/pager_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center_horizontal"
+         android:layout_marginBottom="15dp"
+        android:checkedButton="@+id/pager_rb_01"
+        >
+        <RadioButton
+            android:id="@+id/pager_rb_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/gr"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/gr"
+           />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/gr"
+            />
+    </RadioGroup>
+</FrameLayout>
